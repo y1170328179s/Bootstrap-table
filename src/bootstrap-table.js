@@ -1871,6 +1871,14 @@
                     $selectItem[0].click(); // #144: .trigger('click') bug
                 }
             }
+						
+						//event type is click and clickToSelect is true , click row background color is changing
+						if(e.type === 'click'){
+							$(this).closest('tr').find('td').css({'background':that.options.clickToSelectColor});
+							if(that.options.singleSelect){
+								that.$selectItem.closest('tr').find('td').css({'background-color':'white'});
+							}
+						}
         });
 
         this.$body.find('> tr[data-index] > td > .detail-icon').off('click').on('click', function () {
