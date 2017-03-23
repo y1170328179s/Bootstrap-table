@@ -1864,6 +1864,19 @@
             that.trigger(e.type === 'click' ? 'click-cell' : 'dbl-click-cell', field, value, item, $td);
             that.trigger(e.type === 'click' ? 'click-row' : 'dbl-click-row', item, $tr, field);
 
+						//event type is click and clickToSelect is true , click row background color is changing
+						//针对单击clickToSelect属性设置为false
+            if(e.type === 'click'){
+                if(that.options.singleSelect){
+                    that.$selectItem.closest('tr').find('td').css({'background-color':'white'});
+                }
+                if($(this).closest('tr').hasClass('selected')){ //判断该节点是否含有selected class属性
+                    $(this).closest('tr').find('td').css({'background':'white'});
+                }else{
+                    $(this).closest('tr').find('td').css({'background':that.options.clickToSelectColor});
+                }
+            }
+						
             // if click to select - then trigger the checkbox/radio click
             if (e.type === 'click' && that.options.clickToSelect && column.clickToSelect) {
                 var $selectItem = $tr.find(sprintf('[name="%s"]', that.options.selectItemName));
@@ -1871,14 +1884,6 @@
                     $selectItem[0].click(); // #144: .trigger('click') bug
                 }
             }
-						
-						//event type is click and clickToSelect is true , click row background color is changing
-						if(e.type === 'click'){
-							$(this).closest('tr').find('td').css({'background':that.options.clickToSelectColor});
-							if(that.options.singleSelect){
-								that.$selectItem.closest('tr').find('td').css({'background-color':'white'});
-							}
-						}
         });
 
         this.$body.find('> tr[data-index] > td > .detail-icon').off('click').on('click', function () {
